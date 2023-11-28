@@ -14,8 +14,6 @@ public class Player_State_Machine
 
     public void ChangeState(Player_State _newState)
     {
-        Debug.Log(_newState.animBoolName);
-        Debug.Log(currentState.animBoolName);
         currentState.Exit();
         currentState = _newState;
         currentState.Enter();

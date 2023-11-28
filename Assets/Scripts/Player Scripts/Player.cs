@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Attack details")]
+    public Vector2[] attackMovement;
+
+
+    public bool isBusy;
+
     [Header("Move info")]
     public float moveSpeed = 12;
     public float jumpForce;
@@ -70,6 +76,15 @@ public class Player : MonoBehaviour
         CheckForDashInput();
     }
 
+    public IEnumerator BusyFor(float _seconds)
+    {
+        isBusy = true;
+
+        yield return new WaitForSeconds(_seconds);
+
+        isBusy = false;
+    }
+
     public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
     private void CheckForDashInput()
@@ -94,6 +109,12 @@ public class Player : MonoBehaviour
             stateMachine.ChangeState(dashState);
         }
     }
+
+    public void ZeroVelocity()
+    {
+        rb.velocity = new Vector2(0, 0);
+    }
+
 
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {

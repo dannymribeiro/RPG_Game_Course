@@ -35,7 +35,6 @@ public class PlayerAirState : Player_State
 
         if(player.IsGroundDetected())
         {
-            Debug.Log("Changing");
             stateMachine.ChangeState(player.idleState);
         }
     }
