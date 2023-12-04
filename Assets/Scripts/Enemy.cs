@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    [SerializeField] protected LayerMask whatIsPlayer;
+
+    [Header("Move info")]
+    public float moveSpeed;
+    public float idleTime;
+
     public EnemyStateMachine stateMachine;
 
     protected override void Awake()
@@ -19,4 +25,6 @@ public class Enemy : Entity
         
         stateMachine.currentState.Update();
     }
+
+    public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 50, whatIsPlayer);
 }
