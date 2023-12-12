@@ -13,7 +13,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Enter();
 
-        player.ZeroVelocity();
+        player.SetZeroVelocity();
 
         rb.velocity = new Vector2(0, 0);
     }
