@@ -16,6 +16,7 @@ public class PlayerPrimaryAttack : Player_State
     public override void Enter()
     {
         base.Enter();
+        xInput = 0; // We need this to fix bug on attack direction
 
         if(comboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow)
         {

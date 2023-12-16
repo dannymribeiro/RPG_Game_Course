@@ -20,6 +20,11 @@ public class Entity : MonoBehaviour
     public Rigidbody2D rb;
     public EntityFX fx;
 
+    [Header("Knockback info")]
+    [SerializeField] protected Vector2 knockbackDirection;
+    [SerializeField] protected float knockbackDuration;
+    protected bool isKnocked;
+
     protected virtual void Awake()
     {
 
@@ -40,17 +45,35 @@ public class Entity : MonoBehaviour
     public virtual void Damage()
     {
         fx.StartCoroutine("FlashFX");
-        Debug.Log(gameObject.name + "was damaged");
+        StartCoroutine("HitKnockback");
+    }
+
+    protected virtual IEnumerator HitKnockback()
+    {
+        isKnocked = true;   
+
+        rb.velocity = new Vector2(knockbackDirection.x * -facingDir, knockbackDirection.y);
+
+        yield return new WaitForSeconds(knockbackDuration);
+        isKnocked = false;
     }
 
     public void SetZeroVelocity()
     {
-        rb.velocity = new Vector2(0, 0);
+        if(isKnocked)
+        {
+            return;
+        }
     }
 
 
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {
+        if(isKnocked)
+        {
+            return;
+        }
+
         rb.velocity = new Vector2(_xVelocity, _yVelocity);
         FlipController(_xVelocity);
     }
